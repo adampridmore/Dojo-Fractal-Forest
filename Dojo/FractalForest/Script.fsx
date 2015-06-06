@@ -8,20 +8,13 @@ open Tree
 System.Environment.CurrentDirectory <- "c:\\temp"
 
 // Create a form to display the graphics
-let width, height = 500, 500         
-let form = new Form(Width = width, Height = height)
-let box = new PictureBox(BackColor = Color.White, Dock = DockStyle.Fill)
-let image = new Bitmap(width, height)
-let graphics = Graphics.FromImage(image)
-//The following line produces higher quality images, 
-//at the expense of speed. Uncomment it if you want
-//more beautiful images, even if it's slower.
-//Thanks to https://twitter.com/AlexKozhemiakin for the tip!
-graphics.SmoothingMode <- System.Drawing.Drawing2D.SmoothingMode.HighQuality
-
-box.Image <- image
-box.Dock <- DockStyle.Fill
-form.Controls.Add(box) 
+//let width, height = 500, 500         
+//let form = new Form(Width = width, Height = height)
+//let box = new PictureBox(BackColor = Color.White, Dock = DockStyle.Fill)
+//
+//box.Image <- image
+//box.Dock <- DockStyle.Fill
+//form.Controls.Add(box) 
 
 let randomSeed = new System.Random()
 
@@ -44,9 +37,18 @@ let generateTreeParams numberOfSplits =
 let maxDepth = randomInt 8 10
 let numberOfSplits = randomInt 2 4
 
-let treeParams = generateTreeParams numberOfSplits
-//treeParams |> Seq.iter (printfn "%A")
-treeParams |> drawTree graphics height maxDepth
+let save (fileName:string) (image:Image) = 
+  image.Save(fileName, Imaging.ImageFormat.Png)
 
-//form.ShowDialog()
-image.Save(sprintf "Tree_%i.bmp" (randomInt 0 10000))
+let writeToFile lines = 
+  System.IO.File.WriteAllLines("params.txt", lines |> Seq.toArray)
+
+seq{0..100}
+|> Seq.iter (fun index -> 
+    let treeParams = generateTreeParams numberOfSplits |> Seq.toList
+    //treeParams |> Seq.map(sprintf "%A") |> writeToFile
+
+    treeParams
+    |> drawTree maxDepth
+    |> save (sprintf "Tree_%i.png" index)
+  )

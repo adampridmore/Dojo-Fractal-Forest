@@ -9,7 +9,12 @@ type branchParams = {
   widthPercent: float
 }
 
-let drawTree graphics height maxDepth treeParams =
+let drawTree maxDepth treeParams =
+  let width, height = 500, 500         
+  let image = new Bitmap(width, height)
+  let graphics = Graphics.FromImage(image)
+  graphics.SmoothingMode <- System.Drawing.Drawing2D.SmoothingMode.HighQuality
+
   let flip x = (float)height - x
 
   let brush = new SolidBrush(Color.FromArgb(0, 0, 0))
@@ -49,3 +54,5 @@ let drawTree graphics height maxDepth treeParams =
       |> Seq.iter (fun p -> branch (currentDepth+1) x' y' (dir+p.dirOffset) (len * p.lenPercent) (width*p.widthPercent))
 
   branch 1 250. 10. (0.5*pi) 150. 10.
+
+  image
