@@ -57,6 +57,7 @@
     <Compile Include="Tree.fs" />
     <None Include="packages.config" />
     <Compile Include="CellularAutomation.fs" />
+    <Compile Include="CellularAutomationHelpers.fs" />
     <Compile Include="main.fs" />
     <None Include="CellularAutomation.fsx" />
   </ItemGroup>
