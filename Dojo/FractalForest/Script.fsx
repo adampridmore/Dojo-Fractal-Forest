@@ -1,9 +1,11 @@
-﻿open System
+﻿#load "Tree.fs"
+#r "../packages/FSharp.Collections.ParallelSeq.1.0.2/lib/net40/FSharp.Collections.ParallelSeq.dll"
+
+open System
 open System.Drawing
 open System.Windows.Forms
 open Tree
-
-#load "Tree.fs"
+open FSharp.Collections.ParallelSeq
 
 System.Environment.CurrentDirectory <- "c:\\temp"
 
@@ -34,21 +36,56 @@ let generateTreeParams numberOfSplits =
       }
     } 
 
-let maxDepth = randomInt 8 10
-let numberOfSplits = randomInt 2 4
-
+let imageFormat = Imaging.ImageFormat.Png
 let save (fileName:string) (image:Image) = 
-  image.Save(fileName, Imaging.ImageFormat.Png)
+  image.Save(fileName, imageFormat)
 
 let writeToFile lines = 
   System.IO.File.WriteAllLines("params.txt", lines |> Seq.toArray)
 
-seq{0..100}
-|> Seq.iter (fun index -> 
-    let treeParams = generateTreeParams numberOfSplits |> Seq.toList
-    //treeParams |> Seq.map(sprintf "%A") |> writeToFile
 
-    treeParams
-    |> drawTree maxDepth
-    |> save (sprintf "Tree_%i.png" index)
-  )
+
+//// Growing trees
+//let maxDepth = 8
+//seq{1200..-200..0}
+//|> Seq.iter (fun index -> 
+//  [
+//      {dirOffset = -1.2 + (float index * 0.0010);lenPercent = float index * 0.0005; widthPercent = 0.4};
+//      {dirOffset = -1.3 + (float index * 0.0008);lenPercent = float index * 0.0005; widthPercent = 0.4};
+//      {dirOffset = -1.0 + (float index * 0.0011);lenPercent = float index * 0.0006; widthPercent = 0.3};
+//      {dirOffset = -0.6 + (float index * 0.0012);lenPercent = float index * 0.0006; widthPercent = 0.5};
+//  ]
+//  |> PSeq.map (fun x -> printfn "Index: %i %A" index x ; x)
+//  |> drawTree true maxDepth
+//  |> save (sprintf "Tree_%i.%s" index (imageFormat.ToString()))
+// )
+
+
+// Random Trees
+//let maxDepth = 7 //randomInt 4 7
+//let numberOfSplits = 7 //randomInt 3 6
+//seq{0..1000}
+//|> Seq.iter (fun index -> 
+//  generateTreeParams numberOfSplits |> Seq.toList
+//  |> PSeq.map (fun x -> printfn "Index: %i %A" index x ; x)
+//  |> drawTree true maxDepth
+//  |> save (sprintf "Tree_%i.%s" index (imageFormat.ToString()))
+// )
+
+
+// Single Tree
+seq{0..10}
+//Seq.singleton 1
+|> PSeq.iter (fun index -> 
+  let maxDepth = index
+  [
+      {dirOffset = 0.129;lenPercent = 0.403; widthPercent = 0.48};
+      {dirOffset = 0.-0.007;lenPercent = 0.636; widthPercent = 0.52};
+      {dirOffset = -0.299;lenPercent = 0.412; widthPercent = 0.315};
+      {dirOffset = 0.714;lenPercent = 0.442; widthPercent = 0.560};
+      {dirOffset = -0.086;lenPercent = 0.756; widthPercent = 0.517};
+      {dirOffset = 0.0616;lenPercent = 0.601; widthPercent = 0.360};
+  ]
+  |> drawTree true maxDepth
+  |> save (sprintf "Tree_%i.%s" index (imageFormat.ToString()))
+)
