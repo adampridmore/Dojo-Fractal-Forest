@@ -9,15 +9,17 @@ type branchParams = {
   widthPercent: float
 }
 
-let drawTree maxDepth treeParams =
-  let width, height = 500, 500         
+let drawTree showParams maxDepth treeParams =
+  let width, height = 800, 1024
   let image = new Bitmap(width, height)
-  let graphics = Graphics.FromImage(image)
+  use graphics = Graphics.FromImage(image)
   graphics.SmoothingMode <- System.Drawing.Drawing2D.SmoothingMode.HighQuality
-
+  
+  graphics.Clear(Color.White)
+  
   let flip x = (float)height - x
 
-  let brush = new SolidBrush(Color.FromArgb(0, 0, 0))
+  let brush = new SolidBrush(Color.Black)
   
   // Compute the endpoint of a line
   // starting at x, y, going at a certain angle
@@ -38,14 +40,14 @@ let drawTree maxDepth treeParams =
       let pen = new Pen(brush, (single)width)
       target.DrawLine(pen, origin, destination)
 
-  let draw x y angle length width = 
-      drawLine graphics brush x y angle length width
+  let draw x y angle length width brush =
+    drawLine graphics brush x y angle length width
 
   let pi = Math.PI
 
   let rec branch currentDepth x y dir len width =
-    draw x y dir len width
-  
+    draw x y dir len width brush
+      
     let (x',y') = endpoint x y dir (len*0.95)
 
     if currentDepth >= maxDepth then () |> ignore
@@ -53,6 +55,16 @@ let drawTree maxDepth treeParams =
       treeParams
       |> Seq.iter (fun p -> branch (currentDepth+1) x' y' (dir+p.dirOffset) (len * p.lenPercent) (width*p.widthPercent))
 
-  branch 1 250. 10. (0.5*pi) 150. 10.
+  branch 1 250. 200. (0.5*pi) 150. 10.
+  
+  let font = new System.Drawing.Font("Arial", 9.0f)
+
+  let drawParameters treeParams = 
+    let text = treeParams |> Seq.map (sprintf "%A") |> Seq.reduce (+)
+    let point = new PointF(0.0f,(float32 height - 200.0f))
+    graphics.DrawString(text.ToString(), font, brush, point)
+
+  if showParams then drawParameters treeParams
+  else ()
 
   image
