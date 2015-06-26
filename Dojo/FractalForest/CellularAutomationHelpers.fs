@@ -1,7 +1,7 @@
 ﻿module CellularAutomationHelpers
 
 open CellularAutomation
-
+open CellRules
 
 let arrayToString (x:array<cell>) = 
  x 
