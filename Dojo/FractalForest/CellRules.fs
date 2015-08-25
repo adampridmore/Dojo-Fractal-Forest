@@ -15,6 +15,7 @@ let isAliveRuleRule30 (cells:array<cell>) =
   | [|A;A;A|] -> D
   | _ -> failwith ("Invalid cell sequence in rules" + (sprintf "%A" cells))
 
+// hat
 // https://en.wikipedia.org/wiki/Rule_90
 let isAliveRuleRule90 (cells:array<cell>) = 
   match cells with
@@ -56,6 +57,6 @@ let isAliveRuleRule184 (cells:array<cell>) =
 
 let isAliveRule (cells:array<cell>) = 
   //isAliveRuleRule30 cells
-  //isAliveRuleRule90 cells
-   isAliveRuleRule110 cells
-  //isAliveRuleRule184 cells
+  //isAliveRuleRule90 cells  // hat
+  //isAliveRuleRule110 cells
+  isAliveRuleRule184 cells

@@ -1,7 +1,6 @@
 ﻿module Tree
 open System
 open System.Drawing
-open System.Windows.Forms
 
 type branchParams = {
   dirOffset: float;

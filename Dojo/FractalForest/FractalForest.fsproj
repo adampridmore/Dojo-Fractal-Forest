@@ -54,11 +54,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Script.fsx" />
+    <None Include="TreeScript2.fsx" />
     <Compile Include="Tree.fs" />
     <None Include="packages.config" />
+    <Compile Include="ImageHelpers.fs" />
     <Compile Include="CellRules.fs" />
     <Compile Include="CellularAutomation.fs" />
     <Compile Include="CellularAutomationHelpers.fs" />
+    <Compile Include="CellularAutomationMain.fs" />
     <Compile Include="main.fs" />
     <None Include="CellularAutomation.fsx" />
   </ItemGroup>

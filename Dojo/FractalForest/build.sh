@@ -1,0 +1,2 @@
+fsharpc --out:FractalForest.exe -r "../packages/FSharp.Collections.ParallelSeq.1.0.2/lib/net40/FSharp.Collections.ParallelSeq.dll" "Tree.fs" "CellRules.fs" "CellularAutomation.fs" "CellularAutomationHelpers.fs" "main.fs"
+mv FractalForest.exe bin2/

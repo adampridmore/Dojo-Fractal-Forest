@@ -5,11 +5,10 @@ open System.Drawing
 open System.Windows.Forms
 open Tree
 open FSharp.Collections.ParallelSeq
-open CellularAutomation
-open CellularAutomationHelpers
+open CellularAutomationMain
 
-let doTrees = 
-  System.Environment.CurrentDirectory <- "c:\\temp"
+let doTrees() = 
+  //System.Environment.CurrentDirectory <- "c:\\temp"
 
   let randomSeed = new System.Random()
 
@@ -53,19 +52,9 @@ let doTrees =
     |> save (sprintf "Tree_%i.%s" index (imageFormat.ToString()))
   )
 
-let doCellularAutomation = 
-  let width = 150
-  let row = (
-              (blankList (width/2)) @ 
-              ['X'] @ 
-              (blankList (width/2)) |> List.toArray
-            ) |> charArrayToCells
-  (rowSequence row)
-  |> Seq.take 100
-  |> Seq.iter (fun row -> printfn "%A" (row |> arrayToString))
-
 [<EntryPoint>]
 let main argv = 
-  doCellularAutomation
-
+  //doCellularAutomationToFile()
+  doTrees()
+  
   0
