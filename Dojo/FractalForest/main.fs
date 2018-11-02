@@ -5,7 +5,6 @@ open System.Drawing
 open System.Windows.Forms
 open Tree
 open FSharp.Collections.ParallelSeq
-open CellularAutomationMain
 
 let doTrees() = 
   //System.Environment.CurrentDirectory <- "c:\\temp"
@@ -52,9 +51,9 @@ let doTrees() =
     |> save (sprintf "Tree_%i.%s" index (imageFormat.ToString()))
   )
 
-[<EntryPoint>]
-let main argv = 
-  //doCellularAutomationToFile()
-  doTrees()
-  
-  0
+//[<EntryPoint>]
+//let main argv = 
+//  //doCellularAutomationToFile()
+//  doTrees()
+//  
+//  0

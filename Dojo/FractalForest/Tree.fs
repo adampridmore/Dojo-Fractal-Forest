@@ -8,6 +8,11 @@ type branchParams = {
   widthPercent: float
 }
 
+type treeParams = {
+  maxDepth: int;
+  branches : branchParams array;
+}
+
 let drawTree showParams maxDepth treeParams =
   let width, height = 800, 1024
   let image = new Bitmap(width, height)
@@ -67,3 +72,6 @@ let drawTree showParams maxDepth treeParams =
   else ()
 
   image
+
+let tree treeParams =
+  drawTree true treeParams.maxDepth treeParams.branches
